@@ -692,8 +692,9 @@ MainComponent::MainComponent(bool enableAudioDevice)
   // Initialize new modular components
   fileManager = std::make_unique<AudioFileManager>();
   settingsManager = std::make_unique<SettingsManager>();
-  if (!isPluginMode())
-    menuHandler = std::make_unique<MenuHandler>();
+  // Plugins get a menu too (Edit + Settings) so the inference device can be
+  // changed without the standalone app; MenuHandler trims it for plugin mode.
+  menuHandler = std::make_unique<MenuHandler>();
 
   LOG("MainComponent: loading ONNX models...");
   if (editorController)
@@ -713,7 +714,7 @@ MainComponent::MainComponent(bool enableAudioDevice)
   {
     menuHandler->setUndoManager(undoManager);
     menuHandler->setCommandManager(commandManager.get());
-    menuHandler->setPluginMode(false);
+    menuHandler->setPluginMode(isPluginMode());
     refreshRecentFilesMenu();
     menuHandler->setOnRecentFileSelected(
         [this](const juce::File &file)
@@ -784,15 +785,18 @@ MainComponent::MainComponent(bool enableAudioDevice)
       fitAnalyzedPitchRangeToView(*project);
   };
 
-  // Add child components - standalone uses menus; plugin instances do not.
+  // Add child components - on macOS plugin instances get no menu bar.
 #if JUCE_MAC
 #else
-  if (!isPluginMode() && menuHandler)
+  if (menuHandler)
   {
     menuBar.setModel(menuHandler.get());
     menuBar.setLookAndFeel(&menuBarLookAndFeel);
     addAndMakeVisible(menuBar);
   }
+  // setSize() above laid out before the menu existed; a host that restores the
+  // same size never resizes again, so lay out once more now.
+  resized();
 #endif
   addAndMakeVisible(toolbar);
   addAndMakeVisible(workspace);
@@ -1497,7 +1501,7 @@ MainComponent::~MainComponent()
   if (!isPluginMode() && menuHandler)
     juce::MenuBarModel::setMacMainMenu(nullptr);
 #else
-  if (!isPluginMode() && menuHandler)
+  if (menuHandler)
   {
     menuBar.setModel(nullptr);
     menuBar.setLookAndFeel(nullptr);
@@ -1577,7 +1581,7 @@ void MainComponent::resized()
 
 #if !JUCE_MAC
   // Menu bar at top for non-mac platforms
-  if (!isPluginMode() && menuHandler)
+  if (menuHandler)
     menuBar.setBounds(bounds.removeFromTop(24));
 #endif
 
