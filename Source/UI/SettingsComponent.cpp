@@ -282,6 +282,26 @@ SettingsComponent::SettingsComponent(
   };
   addAndMakeVisible(navigationStyleComboBox);
 
+  swapToolbarGroupsLabel.setText(TR("settings.swap_toolbar_groups"),
+                                 juce::dontSendNotification);
+  configureRowLabel(swapToolbarGroupsLabel);
+  addAndMakeVisible(swapToolbarGroupsLabel);
+
+  swapToolbarGroupsToggle.setButtonText("");
+  swapToolbarGroupsToggle.setClickingTogglesState(true);
+  swapToolbarGroupsToggle.onClick = [this]()
+  {
+    swapToolbarGroups = swapToolbarGroupsToggle.getToggleState();
+    if (settingsManager)
+    {
+      settingsManager->setSwapToolbarGroups(swapToolbarGroups);
+      settingsManager->saveConfig();
+    }
+    if (onSwapToolbarGroupsChanged)
+      onSwapToolbarGroupsChanged(swapToolbarGroups);
+  };
+  addAndMakeVisible(swapToolbarGroupsToggle);
+
   // Info label
   infoLabel.setColour(juce::Label::textColourId, APP_COLOR_TEXT_MUTED);
   infoLabel.setFont(AppFont::getFont(15.0f));
@@ -384,6 +404,7 @@ SettingsComponent::~SettingsComponent()
   cleanedF0DebugToggle.setLookAndFeel(nullptr);
   vocoderF0DebugToggle.setLookAndFeel(nullptr);
   navigationStyleComboBox.setLookAndFeel(nullptr);
+  swapToolbarGroupsToggle.setLookAndFeel(nullptr);
 }
 
 void SettingsComponent::changeListenerCallback(
@@ -522,6 +543,7 @@ void SettingsComponent::resized()
     layoutRow(uvInterpolationDebugLabel, uvInterpolationDebugToggle);
     layoutRow(vocoderF0DebugLabel, vocoderF0DebugToggle);
     layoutRow(reaperNavigationLabel, navigationStyleComboBox);
+    layoutRow(swapToolbarGroupsLabel, swapToolbarGroupsToggle);
 
     infoLabel.setBounds(content.removeFromTop(56));
     content.removeFromTop(12);
@@ -749,6 +771,8 @@ void SettingsComponent::updateTabVisibility()
   vocoderF0DebugToggle.setVisible(showGeneral);
   reaperNavigationLabel.setVisible(showGeneral);
   navigationStyleComboBox.setVisible(showGeneral);
+  swapToolbarGroupsLabel.setVisible(showGeneral);
+  swapToolbarGroupsToggle.setVisible(showGeneral);
   infoLabel.setVisible(showGeneral);
 
   audioDeviceTypeLabel.setVisible(showAudio);
@@ -969,6 +993,7 @@ void SettingsComponent::loadSettings()
     showCleanedF0Debug = settingsManager->getShowCleanedF0Debug();
     showVocoderF0Debug = settingsManager->getShowVocoderF0Debug();
     reaperNavigation = settingsManager->getReaperNavigation();
+    swapToolbarGroups = settingsManager->getSwapToolbarGroups();
 
   }
 
@@ -1014,6 +1039,8 @@ void SettingsComponent::loadSettings()
                                       juce::dontSendNotification);
   navigationStyleComboBox.setSelectedId(reaperNavigation ? 2 : 1,
                                         juce::dontSendNotification);
+  swapToolbarGroupsToggle.setToggleState(swapToolbarGroups,
+                                         juce::dontSendNotification);
   vocoderF0DebugToggle.setToggleState(showVocoderF0Debug,
                                       juce::dontSendNotification);
 
@@ -1438,6 +1465,8 @@ void SettingsComponent::refreshLocalisedText()
   reaperNavigationLabel.setText(TR("settings.navigation_style"),
                                 juce::dontSendNotification);
   navigationStyleComboBox.changeItemText(1, TR("settings.navigation_original"));
+  swapToolbarGroupsLabel.setText(TR("settings.swap_toolbar_groups"),
+                                 juce::dontSendNotification);
 
   if (currentDevice == "CPU")
     infoLabel.setText(TR("settings.cpu_desc"), juce::dontSendNotification);

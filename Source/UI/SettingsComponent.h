@@ -55,6 +55,7 @@ public:
   std::function<void(bool)> onShowCleanedF0DebugChanged;
   std::function<void(bool)> onShowVocoderF0DebugChanged;
   std::function<void(bool)> onReaperNavigationChanged;
+  std::function<void(bool)> onSwapToolbarGroupsChanged;
   std::function<bool()> canChangeDevice;
 
   // Load/save settings
@@ -165,6 +166,8 @@ private:
   juce::ToggleButton vocoderF0DebugToggle;
   juce::Label reaperNavigationLabel;
   StyledComboBox navigationStyleComboBox;
+  juce::Label swapToolbarGroupsLabel;
+  juce::ToggleButton swapToolbarGroupsToggle;
 
   juce::Label infoLabel;
 
@@ -199,6 +202,7 @@ private:
   bool showCleanedF0Debug = false;
   bool showVocoderF0Debug = false;
   bool reaperNavigation = false;
+  bool swapToolbarGroups = false;
   SettingsTab activeTab = SettingsTab::General;
   juce::TextButton generalTabButton;
   juce::TextButton audioTabButton;

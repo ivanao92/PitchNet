@@ -234,6 +234,7 @@
   "settings.debug_vocoder_f0": "顯示聲碼器 F0（除錯）",
   "settings.navigation_style": "導覽方式",
   "settings.navigation_original": "原版",
+  "settings.swap_toolbar_groups": "交換播放控制與編輯工具位置",
   "settings.default_gpu": "預設 GPU",
   "settings.device": "裝置:",
   "settings.device_locked": "正在推論。停止後才能切換裝置。",

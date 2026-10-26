@@ -774,6 +774,7 @@ MainComponent::MainComponent(bool enableAudioDevice)
       settingsManager->getShowVocoderF0Debug());
   reaperNavigation = settingsManager->getReaperNavigation();
   pianoRoll.setReaperNavigation(reaperNavigation);
+  toolbar.setSwapToolAndTransportGroups(settingsManager->getSwapToolbarGroups());
   pianoRollView.setShowSegmentsDebug(
       settingsManager->getShowSegmentsDebug());
   dragAuditionEnabled = settingsManager->getLiveAuditionEnabled();
@@ -3239,6 +3240,10 @@ void MainComponent::showSettings()
       reaperNavigation = enabled;
       pianoRoll.setReaperNavigation(enabled);
     };
+
+    settingsOverlay->getSettingsComponent()->onSwapToolbarGroupsChanged =
+        [this](bool swap)
+    { toolbar.setSwapToolAndTransportGroups(swap); };
     settingsOverlay->getSettingsComponent()->onShowSegmentsDebugChanged =
         [this](bool show)
     {

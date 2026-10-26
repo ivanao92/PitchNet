@@ -234,6 +234,7 @@
   "settings.debug_vocoder_f0": "Mostrar F0 del vocoder (depuración)",
   "settings.navigation_style": "Estilo de navegación",
   "settings.navigation_original": "Original",
+  "settings.swap_toolbar_groups": "Intercambiar transporte y herramientas",
   "settings.default_gpu": "GPU predeterminada",
   "settings.device": "Dispositivo:",
   "settings.device_locked": "Inferencia en curso. Deténla para cambiar de dispositivo.",

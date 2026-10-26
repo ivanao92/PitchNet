@@ -121,6 +121,7 @@ public:
   void setShowCleanedF0Debug(bool show) { showCleanedF0Debug = show; }
   void setShowVocoderF0Debug(bool show) { showVocoderF0Debug = show; }
   void setReaperNavigation(bool enabled) { reaperNavigation = enabled; }
+  void setSwapToolbarGroups(bool swap) { swapToolbarGroups = swap; }
   bool getShowDeltaPitch() const { return showDeltaPitch; }
   bool getShowBasePitch() const { return showBasePitch; }
   bool getShowSegmentsDebug() const { return showSegmentsDebug; }
@@ -131,6 +132,7 @@ public:
   bool getShowCleanedF0Debug() const { return showCleanedF0Debug; }
   bool getShowVocoderF0Debug() const { return showVocoderF0Debug; }
   bool getReaperNavigation() const { return reaperNavigation; }
+  bool getSwapToolbarGroups() const { return swapToolbarGroups; }
 
   // Callbacks
   std::function<void()> onSettingsChanged;
@@ -173,6 +175,8 @@ private:
   bool showVocoderF0Debug = false;
   // Opt-in REAPER-style mouse wheel, click-to-seek and transport.
   bool reaperNavigation = false;
+  // Edit tools beside the logo, transport centered.
+  bool swapToolbarGroups = false;
   bool followSystemAudioOutput = true;
   juce::String preferredAudioOutputDevice;
   juce::String audioDeviceState;

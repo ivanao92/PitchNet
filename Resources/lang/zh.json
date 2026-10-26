@@ -234,6 +234,7 @@
   "settings.debug_vocoder_f0": "显示声码器 F0（调试）",
   "settings.navigation_style": "导航方式",
   "settings.navigation_original": "原版",
+  "settings.swap_toolbar_groups": "交换播放控制与编辑工具位置",
   "settings.default_gpu": "默认 GPU",
   "settings.device": "设备:",
   "settings.device_locked": "正在推理。停止后才能切换设备。",

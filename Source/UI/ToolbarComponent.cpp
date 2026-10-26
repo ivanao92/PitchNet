@@ -361,6 +361,29 @@ void ToolbarComponent::resized()
     slotX += transportSlotStride;
     setButtonInSlot(followButton, slotX);
     followButton.setBounds(followButton.getBounds().translated(5, 0));
+
+    // Optional: edit tools take the transport's place, transport is centered.
+    if (swapToolAndTransportGroups)
+    {
+        const int toolsDx = transportCapsuleBounds.getX() - toolContainerBounds.getX();
+        const int transportDx = fullToolbarBounds.getCentreX()
+                                - transportCapsuleBounds.getWidth() / 2
+                                - transportCapsuleBounds.getX();
+        toolContainerBounds.translate(toolsDx, 0);
+        for (juce::Component *c : {(juce::Component *)&selectModeButton,
+                                   (juce::Component *)&splitModeButton,
+                                   (juce::Component *)&pitchDrawingModeButton,
+                                   (juce::Component *)&timingModeButton,
+                                   (juce::Component *)&progressBar})
+            c->setBounds(c->getBounds().translated(toolsDx, 0));
+        transportCapsuleBounds.translate(transportDx, 0);
+        for (juce::Component *c : {(juce::Component *)&recordButton,
+                                   (juce::Component *)&stopButton,
+                                   (juce::Component *)&playButton,
+                                   (juce::Component *)&loopButton,
+                                   (juce::Component *)&followButton})
+            c->setBounds(c->getBounds().translated(transportDx, 0));
+    }
 }
 
 void ToolbarComponent::refreshLocalisedText()
@@ -603,6 +626,15 @@ void ToolbarComponent::setLeftPanelAvailable(bool available)
         return;
     leftPanelAvailable = available;
     leftPanelButton.setVisible(available);
+    resized();
+    repaint();
+}
+
+void ToolbarComponent::setSwapToolAndTransportGroups(bool swap)
+{
+    if (swapToolAndTransportGroups == swap)
+        return;
+    swapToolAndTransportGroups = swap;
     resized();
     repaint();
 }

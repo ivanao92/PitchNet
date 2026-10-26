@@ -236,6 +236,7 @@
   "settings.debug_vocoder_f0": "Show vocoder F0 (debug)",
   "settings.navigation_style": "Navigation style",
   "settings.navigation_original": "Original",
+  "settings.swap_toolbar_groups": "Swap transport and edit tools",
   "settings.default_gpu": "Default GPU",
   "settings.device": "Device:",
   "settings.device_locked": "Inference in progress. Stop it to switch device.",

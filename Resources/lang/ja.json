@@ -234,6 +234,7 @@
   "settings.debug_vocoder_f0": "ボコーダーの F0 を表示（デバッグ）",
   "settings.navigation_style": "ナビゲーション方式",
   "settings.navigation_original": "オリジナル",
+  "settings.swap_toolbar_groups": "トランスポートと編集ツールを入れ替え",
   "settings.default_gpu": "デフォルトGPU",
   "settings.device": "デバイス:",
   "settings.device_locked": "推論の実行中です。デバイスを変更するには停止してください。",

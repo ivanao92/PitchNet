@@ -222,6 +222,9 @@ void SettingsManager::loadConfig()
         if (configObj->hasProperty("reaperNavigation"))
           reaperNavigation =
               static_cast<bool>(configObj->getProperty("reaperNavigation"));
+        if (configObj->hasProperty("swapToolbarGroups"))
+          swapToolbarGroups =
+              static_cast<bool>(configObj->getProperty("swapToolbarGroups"));
         if (configObj->hasProperty("followSystemAudioOutput"))
           followSystemAudioOutput =
               static_cast<bool>(configObj->getProperty("followSystemAudioOutput"));
@@ -300,6 +303,7 @@ void SettingsManager::saveConfig()
   config->setProperty("showCleanedF0Debug", showCleanedF0Debug);
   config->setProperty("showVocoderF0Debug", showVocoderF0Debug);
   config->setProperty("reaperNavigation", reaperNavigation);
+  config->setProperty("swapToolbarGroups", swapToolbarGroups);
   config->setProperty("followSystemAudioOutput", followSystemAudioOutput);
   config->setProperty("preferredAudioOutputDevice", preferredAudioOutputDevice);
   config->setProperty("audioDeviceState", audioDeviceState);

@@ -92,6 +92,7 @@ public:
     void setLeftPanelVisible(bool visible);
     // Left-panel group is ARA only; hidden (and takes no space) otherwise.
     void setLeftPanelAvailable(bool available);
+    void setSwapToolAndTransportGroups(bool swap);
     void setUndoRedoEnabled(bool undoEnabled, bool redoEnabled);
     void setProject(Project* project);
     bool isFollowPlayback() const { return followPlayback; }
@@ -163,6 +164,7 @@ private:
     ToggleButton parametersButton;
     ToggleButton leftPanelButton; // sits in its own group between logo and transport
     bool leftPanelAvailable = false;
+    bool swapToolAndTransportGroups = false;
     ToggleButton trackViewButton;
     bool trackViewAvailable = false;
     void refreshTrackViewTooltip();
